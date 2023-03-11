@@ -9,11 +9,7 @@ current_model = ""
 class MyFrame(wx.Frame):
     def __init__(self):
         super().__init__(None, title="HRNS Trackmania Model Tool")
-
-        # Create a panel in the frame and add a button
         panel = wx.Panel(self)
-        button = wx.Button(panel, label="Click Me!")
-        button.Bind(wx.EVT_BUTTON, self.on_button_click)
 
         # Add text describing the dropdown menu
         model_selection_text = wx.StaticText(panel, label="Select a model:")
@@ -24,6 +20,10 @@ class MyFrame(wx.Frame):
 
         # Get the current model
         current_model = model_selection_combo_box.GetValue()
+
+        # Create a button to train the model
+        button = wx.Button(panel, label="Train model")
+        button.Bind(wx.EVT_BUTTON, self.on_button_click)
 
         # Create a sizer to manage the layout of child widgets
         sizer = wx.BoxSizer(wx.VERTICAL)
