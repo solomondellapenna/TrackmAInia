@@ -4,7 +4,7 @@ import subprocess
 
 # Global variables
 
-MODEL_PATH = "../models"
+MODEL_PATH = "../models" # TODO: Change to actual model path
 current_model = ""
 terminals = []
 
@@ -40,7 +40,11 @@ class MyFrame(wx.Frame):
         print("Button clicked!")
 
         # Start up terminals to run tmrl
-        subprocess.Popen(['open', '-a', 'Terminal.app', 'ipconfig'])
+        os.system("ls -a")
+        os.system("pwd")
+        os.system("python3 helloworld.py")
+        
+        # subprocess.Popen(['open', '-a', 'Terminal.app', 'ipconfig'])
         # server_term = subprocess.Popen(['open', '-a', 'Terminal.app', 'man man'], stdin=subprocess.PIPE)
         # trainer_term = subprocess.Popen(['open', '-a', 'Terminal.app', 'man man'], stdin=subprocess.PIPE)
         # worker_term = subprocess.Popen(['open', '-a', 'Terminal.app', 'ifconfig'], stdin=subprocess.PIPE)
