@@ -64,8 +64,8 @@ class MyFrame(wx.Frame):
         select_model_in_config(current_model)
         print("current_model =", current_model)        
 
-        # # Start up terminals to run tmrl
-        # os.system("python -m tmrl --test")
+        # Start up terminals to run tmrl
+        os.system("python -m tmrl --test")
 
     # Runs when the user selects a model in the dropdown menu
     def on_model_selection(self, event):
