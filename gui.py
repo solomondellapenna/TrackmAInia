@@ -17,9 +17,12 @@ class MyFrame(wx.Frame):
         # Add text describing the dropdown menu
         model_selection_text = wx.StaticText(panel, label="Select a model:")
 
-        # Create a dropdown menu with the available models in the model_path
-        model_path = TMRLDATA_PATH + "weights/"
-        model_selection_combo_box = wx.ComboBox(panel, choices=os.listdir(model_path), style=wx.CB_READONLY)
+        # Create a list of all models without .tmod extension
+        model_folderpath = TMRLDATA_PATH + "weights/"
+        model_list = [model_filepath[:-5] for model_filepath in os.listdir(model_folderpath)]
+
+        # Create a dropdown menu with the available models in the model_folderpath
+        model_selection_combo_box = wx.ComboBox(panel, choices=model_list, style=wx.CB_READONLY)
         model_selection_combo_box.Bind(wx.EVT_COMBOBOX, self.on_model_selection)
 
         # Get the current model
@@ -45,9 +48,6 @@ class MyFrame(wx.Frame):
 
         # Function that selects the model in the config file
         def select_model_in_config(model_filename):
-            # Remove .tmod extension from filename
-            model_filename = model_filename[:-5]
-
             print("model_filename =", model_filename)
             config_filepath = TMRLDATA_PATH + "config/config.json"
 

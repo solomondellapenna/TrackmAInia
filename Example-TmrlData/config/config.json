@@ -1,5 +1,5 @@
 {
-  "RUN_NAME": "SAC_4_LIDAR_changing_elevation",
+  "RUN_NAME": "SAC_4_imgs_pretrained",
   "RESET_TRAINING": false,
   "BUFFERS_MAXLEN": 500000,
   "RW_MAX_SAMPLES_PER_EPISODE": 1000,
