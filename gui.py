@@ -8,6 +8,8 @@ current_model = ""
 
 class MyFrame(wx.Frame):
     def __init__(self):
+        global current_model
+
         super().__init__(None, title="HRNS Trackmania Model Tool")
         panel = wx.Panel(self)
 
@@ -38,10 +40,14 @@ class MyFrame(wx.Frame):
 
     # Runs when the user clicks Test Model
     def on_test_model_click(self, event):
+        global current_model
         print("Test model button clicked!")
 
         # Function that selects the model in the config file
         def select_model_in_config(model_filename):
+            # Remove .tmod extension from filename
+            model_filename = model_filename[:-5]
+
             print("model_filename =", model_filename)
             config_filepath = TMRLDATA_PATH + "config/config.json"
 
@@ -63,7 +69,9 @@ class MyFrame(wx.Frame):
 
     # Runs when the user selects a model in the dropdown menu
     def on_model_selection(self, event):
+        global current_model
         current_model = event.GetString()
+        print("current_model =", current_model)
 
 
 if __name__ == '__main__':
