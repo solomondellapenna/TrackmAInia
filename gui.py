@@ -4,7 +4,8 @@ import subprocess
 
 # Global variables
 
-MODEL_PATH = "../models" # TODO: Change to actual model path
+# MODEL_PATH = "../models" # TODO: Change to actual model path
+TMRLDATA_PATH = "Example-TmrlData/"
 current_model = ""
 terminals = []
 
