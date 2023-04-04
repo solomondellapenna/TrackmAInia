@@ -42,13 +42,12 @@ class MyFrame(wx.Frame):
 
         # Function that selects the model in the config file
         def select_model_in_config(model_filename):
+            print("model_filename =", model_filename)
             config_filepath = TMRLDATA_PATH + "config/config.json"
 
             # Open file and read in model line
             with open(config_filepath, "r") as f:
                 config_content = f.readlines()
-
-            print(config_content[1])
 
             # Write to config file
             config_content[1] = "  \"RUN_NAME\": " + "\"" + model_filename + "\"" + ",\n"
@@ -56,8 +55,8 @@ class MyFrame(wx.Frame):
             with open(config_filepath, "w") as f:
                 f.writelines(config_content)
 
-
-        select_model_in_config("billybobjones")
+        select_model_in_config(current_model)
+        print("current_model =", current_model)        
 
         # # Start up terminals to run tmrl
         # os.system("python -m tmrl --test")
@@ -65,7 +64,7 @@ class MyFrame(wx.Frame):
     # Runs when the user selects a model in the dropdown menu
     def on_model_selection(self, event):
         current_model = event.GetString()
-        print("current_model =", current_model)
+
 
 if __name__ == '__main__':
     app = wx.App()
