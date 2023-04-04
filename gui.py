@@ -1,13 +1,10 @@
 import wx
 import os
-import subprocess
 
 # Global variables
 
-# MODEL_PATH = "../models" # TODO: Change to actual model path
-TMRLDATA_PATH = "Example-TmrlData/"
+TMRLDATA_PATH = "Example-TmrlData/" # TODO: Change to actual TmrlData path
 current_model = ""
-terminals = []
 
 class MyFrame(wx.Frame):
     def __init__(self):
@@ -27,7 +24,7 @@ class MyFrame(wx.Frame):
         current_model = model_selection_combo_box.GetValue()
 
         # Create a button to train the model
-        button = wx.Button(panel, label="Test model")
+        button = wx.Button(panel, label="Test Model")
         button.Bind(wx.EVT_BUTTON, self.on_test_model_click)
 
         # Create a sizer to manage the layout of child widgets
@@ -39,12 +36,33 @@ class MyFrame(wx.Frame):
 
         panel.SetSizer(sizer)
 
+    # Runs when the user clicks Test Model
     def on_test_model_click(self, event):
         print("Test model button clicked!")
 
-        # Start up terminals to run tmrl
-        os.system("python -m tmrl --test")
+        # Function that selects the model in the config file
+        def select_model_in_config(model_filename):
+            config_filepath = TMRLDATA_PATH + "config/config.json"
 
+            # Open file and read in model line
+            with open(config_filepath, "r") as f:
+                config_content = f.readlines()
+
+            print(config_content[1])
+
+            # Write to config file
+            config_content[1] = "  \"RUN_NAME\": " + "\"" + model_filename + "\"" + ",\n"
+
+            with open(config_filepath, "w") as f:
+                f.writelines(config_content)
+
+
+        select_model_in_config("billybobjones")
+
+        # # Start up terminals to run tmrl
+        # os.system("python -m tmrl --test")
+
+    # Runs when the user selects a model in the dropdown menu
     def on_model_selection(self, event):
         current_model = event.GetString()
         print("current_model =", current_model)
