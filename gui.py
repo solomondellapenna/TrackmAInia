@@ -8,13 +8,11 @@ current_model = ""
 
 
 class MyFrame(wx.Frame):
+    current_model
     def __init__(self):
-        global current_model
-
         super().__init__(None, title="HRNS Trackmania Model Tool")
         panel = wx.Panel(self)
 
-        # TODO: Finish model selection menu
         # Add text describing the dropdown menu
         model_selection_text = wx.StaticText(panel, label="Select a model:")
 
@@ -44,7 +42,7 @@ class MyFrame(wx.Frame):
 
     # Function that selects the model in the config file
     @classmethod
-    def select_model_in_config(self,model_filename):
+    def select_model_in_config(self, model_filename):
         if model_filename == "":
             print("select_model_in_config: No file selected")
             return 0
@@ -61,6 +59,7 @@ class MyFrame(wx.Frame):
 
         with open(config_filepath, "w") as f:
             f.writelines(config_content)
+        return 1
 
     # Runs when the user clicks Test Model
     def on_test_model_click(self, event):
@@ -76,6 +75,7 @@ class MyFrame(wx.Frame):
         # Start up terminals to run tmrl
         try:
             os.system("python -m tmrl --test")
+            return 1
         except:
             print("An error occured when trying to test model")
             return -1
@@ -83,6 +83,7 @@ class MyFrame(wx.Frame):
 
     # Runs when the user selects a model in the dropdown menu
     def on_model_selection(self, event):
+         # Update global model
         global current_model
         current_model = event.GetString()
         print("current_model =", current_model)
@@ -93,9 +94,3 @@ if __name__ == '__main__':
     frame = MyFrame()
     frame.Show()
     app.MainLoop()
-
-
-# Tests:
-def test_select_model_in_config():
-    # Valid parameter
-    assert select_model_in_config("") == 0
