@@ -6,6 +6,7 @@ import os
 TMRLDATA_PATH = "Example-TmrlData/" # TODO: Change to actual TmrlData path
 current_model = ""
 
+
 class MyFrame(wx.Frame):
     def __init__(self):
         global current_model
@@ -41,31 +42,44 @@ class MyFrame(wx.Frame):
 
         panel.SetSizer(sizer)
 
+    # Function that selects the model in the config file
+    @classmethod
+    def select_model_in_config(self,model_filename):
+        if model_filename == "":
+            print("select_model_in_config: No file selected")
+            return 0
+
+        print("model_filename =", model_filename)    
+        config_filepath = TMRLDATA_PATH + "config/config.json"
+
+        # Open file and read in model line
+        with open(config_filepath, "r") as f:
+            config_content = f.readlines()
+
+        # Write to config file
+        config_content[1] = "  \"RUN_NAME\": " + "\"" + model_filename + "\"" + ",\n"
+
+        with open(config_filepath, "w") as f:
+            f.writelines(config_content)
+
     # Runs when the user clicks Test Model
     def on_test_model_click(self, event):
         global current_model
         print("Test model button clicked!")
-
-        # Function that selects the model in the config file
-        def select_model_in_config(model_filename):
-            print("model_filename =", model_filename)
-            config_filepath = TMRLDATA_PATH + "config/config.json"
-
-            # Open file and read in model line
-            with open(config_filepath, "r") as f:
-                config_content = f.readlines()
-
-            # Write to config file
-            config_content[1] = "  \"RUN_NAME\": " + "\"" + model_filename + "\"" + ",\n"
-
-            with open(config_filepath, "w") as f:
-                f.writelines(config_content)
-
-        select_model_in_config(current_model)
+        # Valid filename check
+        valid_file = self.select_model_in_config(current_model)
+        if valid_file == 0:
+            return 0
+        
         print("current_model =", current_model)        
 
         # Start up terminals to run tmrl
-        os.system("python -m tmrl --test")
+        try:
+            os.system("python -m tmrl --test")
+        except:
+            print("An error occured when trying to test model")
+            return -1
+
 
     # Runs when the user selects a model in the dropdown menu
     def on_model_selection(self, event):
@@ -79,3 +93,9 @@ if __name__ == '__main__':
     frame = MyFrame()
     frame.Show()
     app.MainLoop()
+
+
+# Tests:
+def test_select_model_in_config():
+    # Valid parameter
+    assert select_model_in_config("") == 0
