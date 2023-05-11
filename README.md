@@ -7,4 +7,5 @@ Team Members: Henry Bahr, Ryan Huynh, Nate Beattie, and Solomon DellaPenna.
 How to use the GUI:
 1. Make sure your machine has Python 3 installed.
 2. Install wx by running `pip install wxPython`
-3. Run the gui by running `pythonw gui.py`
+3. Update TMRLDATA_PATH with the full path of your TmrlData folder.
+4. Run the gui by running `pythonw gui.py`
